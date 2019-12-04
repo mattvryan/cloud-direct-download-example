@@ -72,6 +72,7 @@ import org.jetbrains.annotations.NotNull;
 import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class CDDExampleTest {
@@ -88,6 +89,7 @@ public class CDDExampleTest {
         validateSignedUrl(url, content);
     }
 
+    @Ignore
     @Test
     public void testS3DirectDownload() throws IOException {
         assertNotNull(s3Client);
@@ -128,9 +130,9 @@ public class CDDExampleTest {
 
     private URL createSignedAzureBlobStorageDownloadURL(@NotNull CloudBlobContainer client, @NotNull final String key)
             throws StorageException, URISyntaxException, InvalidKeyException, MalformedURLException {
-        SharedAccessBlobHeaders headers = new SharedAccessBlobHeaders();
+        SharedAccessBlobHeaders headers = new SharedAccessBlobHeaders(false);
         headers.setContentType(contentType);
-        headers.setContentDisposition(getRFCCompliantContentDispositionHeader());
+        //headers.setContentDisposition(getRFCCompliantContentDispositionHeader());
         // Uncomment the line below to see Azure's service work with the invalid header
         //headers.setContentDisposition(getNonCompliantContentDispositionHeader());
 
@@ -212,7 +214,7 @@ public class CDDExampleTest {
     @BeforeClass
     public static void initClouds() throws URISyntaxException, InvalidKeyException, StorageException {
         setupAzure();
-        setupS3();
+        //setupS3();
     }
 
     @After
